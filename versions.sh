@@ -4,7 +4,7 @@
 export PACKER_VERSION="1.4.1"
 
 # X.Y.Z (e.g. 0.11.1)
-export TERRAFORM_VERSION="0.12.2"
+export TERRAFORM_VERSION="0.11.14"
 
 ## DON'T FORGET TO UPDATE the _VERSIONS env vars
 # _and_ README with any product version bumps below
@@ -16,7 +16,7 @@ export TERRAFORM_VERSION="0.12.2"
 export RELEASE_VERSION="1.0.0"
 
 # X.Y.Z or X.Y.Z-ent for Enterprise binary (e.g. 1.0.6 or 1.0.6-ent)
-export CONSUL_VERSION="1.5.1"
+export CONSUL_VERSION="1.5.2"
 
 # X.Y.Z or X.Y.Z-ent for Enterprise binary (e.g. 0.10.0 or 0.10.0-ent)
 export VAULT_VERSION="1.1.3"
@@ -39,7 +39,7 @@ export NOMAD_VERSION="0.9.3"
 # `true` or `false`. Enterprise images will _not_ be set to public even if
 # `true` is set.
 export RELEASE_VERSIONS='release_versions=[{"0.1.0"=true},{"0.1.1"=false},{"1.0.0"=false},]'
-export CONSUL_VERSIONS='consul_versions=["1.2.3","1.2.3-ent","1.5.1",]'
+export CONSUL_VERSIONS='consul_versions=["1.2.3","1.2.3-ent","1.5.2",]'
 export VAULT_VERSIONS='vault_versions=["0.11.3","0.11.3-ent","1.1.3",]'
 export NOMAD_VERSIONS='nomad_versions=["0.8.6","0.8.6-ent","0.9.3",]'
 
