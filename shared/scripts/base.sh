@@ -14,7 +14,7 @@ sudo timedatectl set-timezone UTC
 YUM=$(which yum 2>/dev/null)
 APT_GET=$(which apt-get 2>/dev/null)
 
-if [[ ! -z ${YUM} ]]; then
+if [[ -n ${YUM} ]]; then
   echo "RHEL/CentOS system detected"
   echo "Performing updates and installing prerequisites"
   sudo yum-config-manager --enable rhui-REGION-rhel-server-releases-optional
@@ -23,7 +23,21 @@ if [[ ! -z ${YUM} ]]; then
   sudo yum -y check-update
 
   echo "Install base packages"
-  sudo yum install -q -y wget unzip bind-utils ruby rubygems ntp git ca-certificates
+  sudo yum install -q -y wget unzip bind-utils ntp git ca-certificates \
+   gcc-c++ patch readline readline-devel zlib zlib-devel \
+   libyaml-devel libffi-devel openssl-devel make \
+   bzip2 autoconf automake libtool bison iconv-devel sqlite-devel
+  curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+  curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+  sudo gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+  curl -L get.rvm.io | bash -s stable
+  source /home/ec2-user/.rvm/scripts/rvm
+  rvm reload
+  rvm requirements run
+  rvm install 2.4
+  rvm use 2.4 --default
+  ruby --version
+  sudo yum install rubygems
   sudo systemctl start ntpd.service
   sudo systemctl enable ntpd.service
 
@@ -37,7 +51,7 @@ if [[ ! -z ${YUM} ]]; then
 
   echo "Install nodejs & nginx packages"
   sudo yum install -q -y nodejs nginx
-elif [[ ! -z ${APT_GET} ]]; then
+elif [[ -n ${APT_GET} ]]; then
   echo "Debian/Ubuntu system detected"
   echo "Performing updates and installing prerequisites"
   sudo apt-get -qq -y update

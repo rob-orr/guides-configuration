@@ -26,22 +26,25 @@
 # Source versions from this repository
 source versions.sh
 
-if [ -z ${S3BUCKET} ]; then
-  read -p $'\033[1;32mPlease enter an S3 bucket name for enterprise binary download: \033[0m' S3BUCKET
+if [ -z "${S3BUCKET}" ]; then
+  # read -p $'\033[1;32mPlease enter an S3 bucket name for enterprise binary download: \033[0m' S3BUCKET
+  read -r $'\033[1;32mPlease enter an S3 bucket name for enterprise binary download: \033[0m' S3BUCKET
   export S3BUCKET="${S3BUCKET}"
 else
   export S3BUCKET="${S3BUCKET}"
 fi
 
-if [ -z ${AWS_ACCESS_KEY_ID} ]; then
-  read -p $'\033[1;32mPlease enter an AWS access key ID for enterprise binary download: \033[0m' AWS_ACCESS_KEY_ID
+if [ -z "${AWS_ACCESS_KEY_ID}" ]; then
+  # read -p $'\033[1;32mPlease enter an AWS access key ID for enterprise binary download: \033[0m' AWS_ACCESS_KEY_ID
+  read -r $'\033[1;32mPlease enter an AWS access key ID for enterprise binary download: \033[0m' AWS_ACCESS_KEY_ID
   export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
 else
   export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
 fi
 
-if [ -z ${AWS_SECRET_ACCESS_KEY} ]; then
-  read -p $'\033[1;32mPlease enter an AWS secret access key for enterprise binary download: \033[0m' AWS_SECRET_ACCESS_KEY
+if [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
+  # read -p $'\033[1;32mPlease enter an AWS secret access key for enterprise binary download: \033[0m' AWS_SECRET_ACCESS_KEY
+  read -r $'\033[1;32mPlease enter an AWS secret access key for enterprise binary download: \033[0m' AWS_SECRET_ACCESS_KEY
   export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
 else
   export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
@@ -58,19 +61,19 @@ export CONSUL_ENT_URL=$(AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
   aws s3 presign \
   --region="us-east-1" \
-  s3://${S3BUCKET}/consul_${CONSUL_VERSION}_linux_amd64.zip \
+  s3://${S3BUCKET}/hashicorp_packages/consul_${CONSUL_VERSION}_linux_amd64.zip \
   --expires-in 6000)
 export VAULT_ENT_URL=$(AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
   aws s3 presign \
   --region="us-east-1" \
-  s3://${S3BUCKET}/vault_${VAULT_VERSION}_linux_amd64.zip \
+  s3://${S3BUCKET}/hashicorp_packages/vault_${VAULT_VERSION}_linux_amd64.zip \
   --expires-in 6000)
 export NOMAD_ENT_URL=$(AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
   AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
   aws s3 presign \
   --region="us-east-1" \
-  s3://${S3BUCKET}/nomad_${NOMAD_VERSION}_linux_amd64.zip \
+  s3://${S3BUCKET}/hashicorp_packages/nomad_${NOMAD_VERSION}_linux_amd64.zip \
   --expires-in 6000)
 
 # Feel free to comment out the below reminder if you're familiar with this process
