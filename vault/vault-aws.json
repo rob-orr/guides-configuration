@@ -33,7 +33,7 @@
       "source_ami_filter": {
         "filters": {
           "virtualization-type": "hvm",
-          "name": "*RHEL-7.3_HVM_GA-*",
+          "name": "RHEL-7.3_HVM-20170424-x86_64-1-Hourly2-GP2",
           "root-device-type": "ebs"
         },
         "owners": ["309956199498"],
