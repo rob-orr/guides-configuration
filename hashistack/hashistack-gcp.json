@@ -39,7 +39,7 @@
       }
     },
     {
-      "name": "gcp-rhel-7.3-systemd",
+      "name": "gcp-rhel-7.7-systemd",
       "image_description": "Hashicorp HashiStack Server",
       "image_name": "{{ (user `environment`) | clean_image_name }}-hashistack-server-{{ (user `distribution`) | clean_image_name }}-rhel-7-3",
       "type": "googlecompute",
@@ -116,7 +116,7 @@
       "type": "shell",
       "only": [
         "gcp-ubuntu-16.04-systemd",
-        "gcp-rhel-7.3-systemd"
+        "gcp-rhel-7.7-systemd"
       ],
       "inline": [
         "bash /tmp/consul/scripts/install-consul-systemd.sh"
@@ -136,7 +136,7 @@
       "type": "shell",
       "only": [
         "gcp-ubuntu-16.04-systemd",
-        "gcp-rhel-7.3-systemd"
+        "gcp-rhel-7.7-systemd"
       ],
       "inline": [
         "bash /tmp/nomad/scripts/install-nomad-systemd.sh"
@@ -183,7 +183,7 @@
       "type": "shell",
       "only": [
         "gcp-ubuntu-16.04-systemd",
-        "gcp-rhel-7.3-systemd"
+        "gcp-rhel-7.7-systemd"
       ],
       "inline": [
         "bash /tmp/vault/scripts/install-vault-systemd.sh"
@@ -213,7 +213,7 @@
     },
     {
       "type": "googlecompute-export",
-      "only": ["gcp-rhel-7.3-systemd"],
+      "only": ["gcp-rhel-7.7-systemd"],
       "paths": [
         "gs://hc-se-image-store/{{ user `environment` }}/consul-{{ user `consul_version`}}-nomad-{{ user `nomad_version`}}-vault-{{ user `vault_version`}}/hashistack-server-rhel-7-3.tar.gz"
       ],
