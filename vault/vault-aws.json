@@ -20,7 +20,7 @@
   },
   "builders": [
     {
-      "name": "amazon-ebs-rhel-7.3-systemd",
+      "name": "amazon-ebs-rhel-8.0-systemd",
       "type": "amazon-ebs",
       "access_key": "{{ user `aws_access_key_id` }}",
       "secret_key": "{{ user `aws_secret_access_key` }}",
@@ -33,7 +33,7 @@
       "source_ami_filter": {
         "filters": {
           "virtualization-type": "hvm",
-          "name": "RHEL-7.3_HVM-20170424-x86_64-1-Hourly2-GP2",
+          "name": "RHEL-8.0.0_HVM-20190618-x86_64-1-Hourly2-GP2",
           "root-device-type": "ebs"
         },
         "owners": ["309956199498"],
@@ -110,7 +110,7 @@
     },
     {
       "type": "shell",
-      "only": ["amazon-ebs-rhel-7.3-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
+      "only": ["amazon-ebs-rhel-8.0-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
       "inline": [
         "bash /tmp/shared/scripts/base-aws.sh"
       ]
@@ -141,7 +141,7 @@
     },
     {
       "type": "shell",
-      "only": ["amazon-ebs-rhel-7.3-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
+      "only": ["amazon-ebs-rhel-8.0-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
       "inline": [
         "bash /tmp/consul/scripts/install-consul-systemd.sh"
       ]
@@ -172,14 +172,14 @@
     },
     {
       "type": "shell",
-      "only": ["amazon-ebs-rhel-7.3-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
+      "only": ["amazon-ebs-rhel-8.0-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
       "inline": [
         "bash /tmp/vault/scripts/install-vault-systemd.sh"
       ]
     },
     {
       "type": "shell",
-      "only": ["amazon-ebs-rhel-7.3-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
+      "only": ["amazon-ebs-rhel-8.0-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
       "inline": [
         "cd /tmp/shared/scripts && bash /tmp/shared/scripts/setup-testing.sh",
         "cd /tmp && rake vault:spec"
@@ -187,7 +187,7 @@
     },
     {
       "type": "shell",
-      "only": ["amazon-ebs-rhel-7.3-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
+      "only": ["amazon-ebs-rhel-8.0-systemd", "amazon-ebs-ubuntu-16.04-systemd"],
       "inline": [
         "bash /tmp/shared/scripts/cleanup-aws.sh"
       ]

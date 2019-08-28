@@ -12,15 +12,17 @@ download_jdk() {
     --retry 5 \
     --retry-delay 0 \
     --retry-max-time 60"
-  readonly URL="http://www.oracle.com"
-  readonly JDK_DOWNLOAD_URL1="${URL}/technetwork/java/javase/downloads/index.html"
-  readonly JDK_DOWNLOAD_URL2=$(${curl_cmd} ${JDK_DOWNLOAD_URL1} | egrep -o "\/technetwork\/java/\javase\/downloads\/jdk${JDK_VERSION}-downloads-.+?\.html" | head -1 | cut -d '"' -f 1)
-  [[ -z "${JDK_DOWNLOAD_URL2}" ]] && echo "Could not get jdk download url - ${JDK_DOWNLOAD_URL1}" && exit 1
-  readonly JDK_DOWNLOAD_URL3="${URL}${JDK_DOWNLOAD_URL2}"
-  readonly JDK_DOWNLOAD_URL4=$(${curl_cmd} ${JDK_DOWNLOAD_URL3} | egrep -o "http\:\/\/download.oracle\.com\/otn-pub\/java\/jdk\/[7-8]u[0-9]+\-(.*)+\/jdk-[7-8]u[0-9]+(.*)linux-x64.${EXT}" | tail -1)
-  for DL_URL in "${JDK_DOWNLOAD_URL4[@]}"; do
-    wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" -N ${DL_URL}
-  done
+  # readonly URL="https://www.oracle.com"
+  # readonly JDK_DOWNLOAD_URL1="${URL}/technetwork/java/javase/downloads/index.html"
+  # readonly JDK_DOWNLOAD_URL2=$(${curl_cmd} ${JDK_DOWNLOAD_URL1} | grep -E -o "\/technetwork\/java/\javase\/downloads\/jdk${JDK_VERSION}-downloads-.+?\.html" | head -1 | cut -d '"' -f 1)
+  # [[ -z "${JDK_DOWNLOAD_URL2}" ]] && echo "Could not get jdk download url - ${JDK_DOWNLOAD_URL1}" && exit 1
+  # readonly JDK_DOWNLOAD_URL3="${URL}${JDK_DOWNLOAD_URL2}"
+  # readonly JDK_DOWNLOAD_URL4=$(${curl_cmd} "${JDK_DOWNLOAD_URL3}" | grep -E -o "https\:\/\/download\.oracle\.com\/otn\/java\/.*\/jdk-${JDK_VERSION}u[0-9]+(.*)linux-x64.${EXT}" | tail -1)
+  # for DL_URL in "${JDK_DOWNLOAD_URL4[@]}"; do
+  DL_URL='https://javadl.oracle.com/webapps/download/AutoDL?BundleId=239847_230deb18db3e4014bb8e3e8324f81b43'
+  wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" -N "${DL_URL}"
+  mv 'AutoDL?BundleId=239847_230deb18db3e4014bb8e3e8324f81b43' jre-8u221-linux-x64.rpm
+  #  done
 }
 
 echo "Running"
@@ -33,11 +35,13 @@ APT_GET=$(which apt-get 2>/dev/null)
 
 if [[ ! -z ${YUM} ]]; then
   echo "RHEL/CentOS system detected"
-  download_jdk 8 rpm
+  aws s3 cp s3://infosec-vault/jdk-8u221-linux-x64.rpm .
+  # download_jdk 8 rpm
   sudo rpm -Uvh jdk-*-linux-x64.rpm
 elif [[ ! -z ${APT_GET} ]]; then
   echo "Debian/Ubuntu system detected"
-  download_jdk 8 tar.gz
+  # download_jdk 8 tar.gz
+  aws s3 cp s3://infosec-vault/jdk-8u221-linux-x64.tar.gz .
   sudo mkdir -p /opt/jdk
   sudo tar xf jdk-*-linux-x64.tar.gz -C /opt/jdk
   JDK_VERSION="$(ls /opt/jdk/)"
